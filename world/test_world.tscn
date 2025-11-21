@@ -1,16 +1,16 @@
 [gd_scene load_steps=3 format=3 uid="uid://ch4fr6ffx53se"]
 
 [ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="1_player"]
-[ext_resource type="PackedScene" path="res://ui/hud_overlay.tscn" id="2_hud"]
+[ext_resource type="Texture2D" path="res://assets/sprites/Cenario.png" id="2_background"]
+[ext_resource type="PackedScene" path="res://ui/hud_overlay.tscn" id="3_hud"]
 
 [node name="TestWorld" type="Node2D"]
 
-[node name="HUDOverlay" parent="." instance=ExtResource("2_hud")]
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(576, 324)
+texture = ExtResource("2_background")
 
-[node name="Background" type="ColorRect" parent="."]
-offset_right = 1152.0
-offset_bottom = 648.0
-color = Color(0.15, 0.15, 0.15, 1)
+[node name="HUDOverlay" parent="." instance=ExtResource("3_hud")]
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(576, 324)

@@ -68,36 +68,6 @@ d:\anel-de-iquitim\
 ├── project.godot                   # ✅ Input "toggle_ring" configurado
 │
 ├── _core/
-│   ├── signal_bus.gd               # ✅ Implementado
-│   ├── game_manager.gd             # ✅ Implementado
-│   ├── save_system.gd              # ⏳ Pendente
-│   └── audio_manager.gd            # ⏳ Pendente
-│
-├── entities/
-│   └── player/
-│       ├── player.tscn             # ✅ Top-down (CircleShape2D)
-│       └── player_controller.gd    # ✅ Toggle implementado
-│
-├── systems/
-│   ├── possession_component.gd     # ✅ Implementado
-│   ├── health_component.gd         # ⏳ Pendente
-│   ├── hitbox_component.gd         # ⏳ Pendente
-│   └── interaction_component.gd    # ⏳ Pendente
-│
-├── world/
-│   └── test_world.tscn             # ✅ Top-down com background
-│
-└── assets/
-    └── sprites/
-        ├── player_simple.png       # ✅ Placeholder (muda de cor)
-        └── ground_simple.png       # ✅ Placeholder
-```
-
-## 🎨 PALETA DE CORES
-
-```gdscript
-# Cores do Projeto
-const COLOR_IQUITIM_GREEN := Color("#2BFF81")  # RGB(43, 255, 129)
 const COLOR_POSSESSION_PURPLE := Color("#B400FF")  # RGB(180, 0, 255)
 const COLOR_DEEP_BLACK := Color("#0B0B0B")  # RGB(11, 11, 11)
 ```

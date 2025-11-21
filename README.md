@@ -87,13 +87,20 @@ anel-de-iquitim/
 - **Controle de Versão:** Git
 - **Testes:** GdUnit4
 - **Assets:** Pixel Art (32x32)
+### ✅ Fase 1: Mecânica Core (EM PROGRESSO)
 - [x] Movimentação Básica (Top-Down)
+- [x] Toggle do Anel (TAB)
 - [x] Feedback visual (verde quando ativo)
 - [x] Ajuste de velocidade dinâmica (90→130 px/s)
-- [ ] Dash com I-frames
+- [x] Sistema de Possessão
+- [x] Health Component
+- [x] Dash com I-frames
+- [x] Sprites Animados (AnimatedSprite2D)
+- [x] Sistema de Projéteis (Fireball)
+- [x] Background Sprites
 - [ ] Transformação Iquitim
 - [ ] Game Over por overflow
-- [ ] Barra de Possessão UI
+- [ ] Barra de Possessão UI completa
 
 ### ⏳ Fase 2: Combate
 - [ ] Ataque básico (humano)

@@ -33,7 +33,7 @@ var dash_direction: Vector2 = Vector2.ZERO
 # Referências aos Componentes
 @onready var possession_component: PossessionComponent = $PossessionComponent
 @onready var health_component: HealthComponent = $HealthComponent
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var fireball_scene: PackedScene = preload("res://entities/projectiles/fireball.tscn")
 
@@ -69,6 +69,10 @@ func _unhandled_input(event: InputEvent) -> void:
 func _state_idle(delta: float) -> void:
 	_apply_friction(delta)
 	
+	# Play idle animation
+	if animated_sprite.animation != "idle":
+		animated_sprite.play("idle")
+	
 	if Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down") != Vector2.ZERO:
 		current_state = State.MOVE
 
@@ -79,6 +83,14 @@ func _state_move(delta: float) -> void:
 		current_state = State.IDLE
 		_apply_friction(delta)
 	else:
+		# Play walk animation
+		if animated_sprite.animation != "walk":
+			animated_sprite.play("walk")
+		
+		# Flip sprite based on horizontal movement
+		if input_vector.x != 0:
+			animated_sprite.flip_h = input_vector.x < 0
+		
 		_apply_movement(input_vector, delta)
 		# Sem regen enquanto move
 		if health_component: health_component.can_regenerate = false
@@ -96,7 +108,7 @@ func start_dash() -> void:
 		dash_direction = Vector2.RIGHT
 	
 	# Feedback visual (transparência)
-	sprite.modulate.a = 0.5
+	animated_sprite.modulate.a = 0.5
 	
 	# Timer de Duração
 	await get_tree().create_timer(DASH_DURATION).timeout
@@ -109,7 +121,7 @@ func end_dash() -> void:
 	if current_state == State.DASH:
 		current_state = State.IDLE
 		velocity = Vector2.ZERO
-		sprite.modulate.a = 1.0
+		animated_sprite.modulate.a = 1.0
 		
 		# Timer de Cooldown
 		await get_tree().create_timer(DASH_COOLDOWN).timeout
@@ -169,8 +181,8 @@ func take_damage(amount: float) -> void:
 		health_component.take_damage(amount)
 		# Feedback visual simples (piscar vermelho)
 		var tween = create_tween()
-		tween.tween_property(sprite, "modulate", Color.RED, 0.1)
-		tween.tween_property(sprite, "modulate", Color.WHITE, 0.1)
+		tween.tween_property(animated_sprite, "modulate", Color.RED, 0.1)
+		tween.tween_property(animated_sprite, "modulate", Color.WHITE, 0.1)
 
 # --- Mecânica do Anel (GDD 10.4) ---
 
@@ -182,7 +194,7 @@ func toggle_ring_state() -> void:
 	
 	if is_ring_active:
 		# Feedback Visual: Verde Iquitim (#2BFF81)
-		sprite.modulate = Color(0.17, 1.0, 0.51)
+		animated_sprite.modulate = Color(0.17, 1.0, 0.51)
 		
 		# Penalidade instantânea ao ativar
 		# Penalidade instantânea ao ativar
@@ -200,7 +212,7 @@ func toggle_ring_state() -> void:
 		print("  └─ Possessão: +10%")
 	else:
 		# Feedback Visual: Normal
-		sprite.modulate = Color(1.0, 1.0, 1.0)
+		animated_sprite.modulate = Color(1.0, 1.0, 1.0)
 		
 		# Regressão ao desativar
 		if possession_component:
