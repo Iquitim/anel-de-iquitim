@@ -127,8 +127,8 @@ anel-de-iquitim/
 ## 🎯 Mecânicas Principais
 
 ### Sistema de Possessão
-- Barra dupla: Vida (Roxo) vs Possessão (Verde)
-- Ativar anel = +10% possessão instantânea
+- Barra de Possessão (Verde) sobrepõe Barra de Vida (Roxo)
+- Ativar anel = +10% possessão | Desativar = -10% possessão
 - Se Possessão > Vida durante cooldown = **MORTE INSTANTÂNEA**
 
 ### Transformação Iquitim
@@ -208,9 +208,9 @@ Este projeto está sob licença MIT. Veja o arquivo `LICENSE` para mais detalhes
 
 ## 📞 Contato
 
-**Desenvolvedor:** [Seu Nome]  
-**Email:** [seu@email.com]  
-**GitHub:** [@seu-usuario](https://github.com/seu-usuario)
+**Desenvolvedor:** Silvano Lima de Barros  
+**Email:** [silvano.limadebarros@email.com]  
+**GitHub:** [@Iquitim](https://github.com/Iquitim)
 
 ---
 

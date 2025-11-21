@@ -105,6 +105,7 @@ Estabilização (Café, Cura, Fugir)
 - ✅ Regeneração de vida (3s parado)
 - ✅ Stealth ativo
 - ✅ Passos silenciosos
+- ✅ Alívio: -10% de possessão ao desativar
 - ❌ Combate fraco (soco/chute)
 
 #### Estado 2: Anel Ativado (Modo Combate)
@@ -357,7 +358,7 @@ Filhas do Guardião das Sombras, não morrem em combates normais.
 Localizado no canto superior esquerdo - **recipiente de vidro rachado**:
 
 - **Barra de Vida (Roxa `#B400FF`):** Preenche esquerda → direita
-- **Barra de Possessão (Verde `#2BFF81`):** Preenche direita → esquerda
+- **Barra de Possessão (Verde `#2BFF81`):** Preenche esquerda → direita (sobrepondo a vida)
 - **Ponto de Ruptura:** Onde as cores se encontram
 - **Quebra Visual:** Se verde cobrir todo roxo → vidro "quebra"
 

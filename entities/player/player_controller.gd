@@ -105,5 +105,10 @@ func toggle_ring_state() -> void:
 		# Feedback Visual: Normal
 		sprite.modulate = Color(1.0, 1.0, 1.0)
 		
+		# Regressão ao desativar
+		if possession_component:
+			possession_component.reduce_possession(10.0)
+		
 		print("⚪ Anel DESATIVADO")
 		print("  └─ Velocidade: ", get_target_speed(), " px/s")
+		print("  └─ Possessão: -10%")

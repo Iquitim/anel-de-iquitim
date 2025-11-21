@@ -43,6 +43,14 @@ func activate_ring() -> void:
     emit_signal("noise_generated", global_position, 200.0)
 ```
 
+### Alívio de Desativação
+```gdscript
+func deactivate_ring() -> void:
+    is_ring_active = false
+    reduce_possession(10.0) # Recua 10%
+    health_regen_timer.start(2.0)
+```
+
 ### Regeneração (Apenas Humano)
 ```gdscript
 func _on_regen_timer_timeout() -> void:
@@ -162,7 +170,7 @@ enum PlayerState {
 - [ ] Criar HUD overlay
 - [ ] Recipiente rachado (conforme GDD)
 - [ ] Barra de Vida (roxa) esquerda→direita
-- [ ] Barra de Possessão (verde) direita→esquerda
+- [ ] Barra de Possessão (verde) esquerda→direita (overlay)
 - [ ] Indicador de estado do anel
 - [ ] Feedback de tela (vinheta, glitch em 80%+)
 
