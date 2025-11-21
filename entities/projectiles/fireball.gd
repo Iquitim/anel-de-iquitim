@@ -12,6 +12,10 @@ extends Area2D
 var direction: Vector2 = Vector2.RIGHT
 
 func _ready() -> void:
+	# Pequeno delay antes de ativar colisões (evita colidir com player ao spawnar)
+	await get_tree().create_timer(0.05).timeout
+	body_entered.connect(_on_body_entered)
+	
 	# Destruir após tempo de vida
 	await get_tree().create_timer(lifetime).timeout
 	queue_free()
@@ -24,9 +28,10 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is PlayerController:
 		return
 		
-	# TODO: Causar dano se for inimigo (quando tivermos inimigos)
-	# if body.has_method("take_damage"):
-	# 	body.take_damage(damage)
+	# Causar dano se for inimigo com HealthComponent ou take_damage
+	if body.has_method("take_damage"):
+		body.take_damage(damage)
+		print("🔥 Fireball atingiu inimigo! Dano: ", damage)
 	
 	# Destruir ao bater em parede ou inimigo
 	queue_free()

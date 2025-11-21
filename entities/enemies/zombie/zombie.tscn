@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/zombie/zombie_controller.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/Zumbi.png" id="2_sprite"]
+[ext_resource type="Script" path="res://systems/health_component.gd" id="3_health"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_zombie_idle"]
+atlas = ExtResource("2_sprite")
+region = Rect2(0, 0, 100, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_zombie_walk_0"]
+atlas = ExtResource("2_sprite")
+region = Rect2(0, 100, 100, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_zombie_walk_1"]
+atlas = ExtResource("2_sprite")
+region = Rect2(100, 100, 100, 120)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_zombie"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_zombie_idle")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_zombie_idle")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 1.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_zombie"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 180.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_attack"]
+radius = 25.0
+
+[node name="Zombie" type="CharacterBody2D"]
+script = ExtResource("1_script")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.82, 1.82)
+sprite_frames = SubResource("SpriteFrames_zombie")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_zombie")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("3_health")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_detection")
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_attack")
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="AttackArea" to="." method="_on_attack_area_body_exited"]

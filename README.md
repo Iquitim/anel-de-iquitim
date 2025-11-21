@@ -87,7 +87,7 @@ anel-de-iquitim/
 - **Controle de Versão:** Git
 - **Testes:** GdUnit4
 - **Assets:** Pixel Art (32x32)
-### ✅ Fase 1: Mecânica Core (EM PROGRESSO)
+### ✅ Fase 1: Mecânica Core (CONCLUÍDO)
 - [x] Movimentação Básica (Top-Down)
 - [x] Toggle do Anel (TAB)
 - [x] Feedback visual (verde quando ativo)
@@ -98,16 +98,16 @@ anel-de-iquitim/
 - [x] Sprites Animados (AnimatedSprite2D)
 - [x] Sistema de Projéteis (Fireball)
 - [x] Background Sprites
-- [ ] Transformação Iquitim
-- [ ] Game Over por overflow
-- [ ] Barra de Possessão UI completa
+- [x] Transformação Iquitim
+- [x] Game Over por overflow
+- [x] Barra de Possessão UI completa
 
-### ⏳ Fase 2: Combate
-- [ ] Ataque básico (humano)
+### ⏳ Fase 2: Combate (EM PROGRESSO)
+- [x] Ataque básico (Fireball)
 - [ ] Magias do anel
-- [ ] Sistema de hitbox/hurtbox
-- [ ] Primeiro inimigo (Rastejante)
-- [ ] Feedback de dano
+- [ ] Sistema de hitbox/hurtbox (Refinar)
+- [x] Primeiro inimigo (Zumbi)
+- [x] Feedback de dano
 
 ### ⏳ Fase 3: Mundo
 - [ ] Setor 0: Cemitério (hub)

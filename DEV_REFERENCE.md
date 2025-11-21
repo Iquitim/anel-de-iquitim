@@ -136,31 +136,31 @@ enum PlayerState {
 - [x] Penalidade de possessão (+10%)
 - [x] Emissão de ruído (quebra stealth)
 
-### 2. Barra de Possessão UI ⭐ (PRÓXIMO PASSO)
-- [ ] Criar HUD overlay
-- [ ] Recipiente rachado (conforme GDD)
-- [ ] Barra de Vida (roxa) esquerda→direita
-- [ ] Barra de Possessão (verde) esquerda→direita (overlay)
-- [ ] Indicador de estado do anel
-- [ ] Feedback de tela (vinheta, glitch em 80%+)
+### 2. Barra de Possessão UI ⭐ (CONCLUÍDO)
+- [x] Criar HUD overlay
+- [x] Recipiente rachado (conforme GDD)
+- [x] Barra de Vida (roxa) esquerda→direita
+- [x] Barra de Possessão (verde) esquerda→direita (overlay)
+- [x] Indicador de estado do anel
+- [x] Feedback de tela (vinheta, glitch em 80%+)
 
-### 3. Sistema de Combate Básico
-- [ ] Implementar ataque humano (fraco)
+### 3. Sistema de Combate Básico (EM PROGRESSO)
+- [x] Implementar ataque básico (Fireball)
 - [ ] Implementar magias do anel
-- [ ] Sistema de hitbox/hurtbox
-- [ ] Feedback visual de dano
+- [x] Sistema de hitbox/hurtbox
+- [x] Feedback visual de dano
 
-### 4. Primeiro Inimigo
-- [ ] Rastejante Cego (Setor 1)
-- [ ] IA básica (patrulha + perseguição)
+### 4. Primeiro Inimigo (CONCLUÍDO)
+- [x] Zumbi (Setor 0)
+- [x] IA básica (patrulha + perseguição)
 - [ ] Drop de orbes
-- [ ] Morte e respawn
+- [x] Morte e respawn (Morte implementada)
 
-### 5. Sistema de Regeneração
-- [ ] Vida regenera quando anel desativado
-- [ ] Delay de 3s parado
-- [ ] Para quando anel ativa
-- [ ] Feedback visual de regeneração
+### 5. Sistema de Regeneração (CONCLUÍDO)
+- [x] Vida regenera quando anel desativado
+- [x] Delay de 3s parado
+- [x] Para quando anel ativa
+- [x] Feedback visual de regeneração
 
 ## 🐛 DEBUGGING
 

@@ -9,8 +9,9 @@ signal health_updated(current: float, max_val: float)
 signal died
 
 @export var max_health: float = 100.0
-@export var regen_rate: float = 5.0 # Vida por segundo
+@export var regen_rate: float = 2.0 # Vida por segundo (reduzido)
 @export var regen_delay: float = 3.0 # Tempo parado para iniciar regen
+@export var max_regen_percent: float = 0.6 # Regenera até 60% do máximo
 
 var current_health: float
 var can_regenerate: bool = true
@@ -22,7 +23,8 @@ func _ready() -> void:
 	call_deferred("_emit_update")
 
 func _process(delta: float) -> void:
-	if can_regenerate and current_health < max_health:
+	var max_regen_health = max_health * max_regen_percent
+	if can_regenerate and current_health < max_regen_health:
 		_handle_regeneration(delta)
 
 func take_damage(amount: float) -> void:
@@ -43,12 +45,16 @@ func heal(amount: float) -> void:
 	_emit_update()
 
 func _handle_regeneration(delta: float) -> void:
-	# Lógica simples de delay: se moveu ou tomou dano, reseta timer (gerenciado externamente ou aqui)
-	# Por enquanto, assume-se que 'can_regenerate' é controlado pelo PlayerController (movimento/anel)
-	# Se can_regenerate for true, aplica regen
+	# Limitar regeneração a 60% do máximo
+	var max_regen_health = max_health * max_regen_percent
+	
+	if current_health >= max_regen_health:
+		return # Não regenera além de 60%
+	
+	# Aplica regeneração
 	current_health += regen_rate * delta
-	current_health = min(current_health, max_health)
+	current_health = min(current_health, max_regen_health)
 	_emit_update()
 
 func _emit_update() -> void:
-	SignalBus.health_updated.emit(current_health, max_health)
+	health_updated.emit(current_health, max_health)

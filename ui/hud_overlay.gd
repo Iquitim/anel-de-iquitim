@@ -16,6 +16,7 @@ const COLOR_RING_COOLDOWN := Color(1.0, 0.0, 0.0) # Vermelho (Cooldown)
 @onready var health_bar: ProgressBar = $MarginContainer/VBoxContainer/BarContainer/BarStack/HealthBar
 @onready var possession_bar: ProgressBar = $MarginContainer/VBoxContainer/BarContainer/BarStack/PossessionBar
 @onready var ring_indicator: ColorRect = $MarginContainer/VBoxContainer/RingIndicator/ColorRect
+@onready var hp_label: Label = $MarginContainer/VBoxContainer/HPLabel
 
 # Valores atuais
 var current_health: float = 100.0
@@ -66,6 +67,9 @@ func _update_bars() -> void:
 	health_bar.max_value = max_health
 	health_bar.value = current_health
 	
+	# Atualizar texto do HP
+	hp_label.text = "HP: %d/%d" % [int(current_health), int(max_health)]
+	
 	# Atualizar barra de possessão
 	possession_bar.max_value = max_possession
 	possession_bar.value = current_possession
@@ -77,9 +81,6 @@ func _on_possession_updated(current: float, maximum: float) -> void:
 	current_possession = current
 	max_possession = maximum
 	_update_bars()
-	
-	# Debug
-	print("HUD: Possessão atualizada - ", current, "/", maximum)
 
 func _on_ring_toggled(is_active: bool) -> void:
 	## Atualiza o indicador visual do estado do anel
