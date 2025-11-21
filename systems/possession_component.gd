@@ -6,7 +6,7 @@ extends Node
 ## Monitora Vida vs Possessão e emite sinais críticos.
 
 @export var max_health: float = 100.0
-@export var possession_decay_rate: float = 1.0 # Quanto a possessão cai por segundo (se houver mecânica de alívio passivo)
+@export var possession_decay_rate: float = 5.0 # 10% em 2s = 5%/s
 @export var health_component: HealthComponent
 
 var current_possession: float = 0.0
@@ -22,7 +22,14 @@ func _ready() -> void:
 	add_child(iquitim_cooldown_timer)
 
 func _process(delta: float) -> void:
+	_handle_decay(delta)
 	_check_possession_limit()
+
+func _handle_decay(delta: float) -> void:
+	if current_possession > 0:
+		current_possession -= possession_decay_rate * delta
+		current_possession = max(0.0, current_possession)
+		SignalBus.possession_updated.emit(current_possession, max_health)
 
 func add_possession(amount: float) -> void:
 	current_possession += amount

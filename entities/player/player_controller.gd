@@ -35,6 +35,8 @@ var dash_direction: Vector2 = Vector2.ZERO
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var sprite: Sprite2D = $Sprite2D
 
+var fireball_scene: PackedScene = preload("res://entities/projectiles/fireball.tscn")
+
 func _ready() -> void:
 	# Configurar dependências
 	if possession_component and health_component:
@@ -59,6 +61,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		toggle_ring_state()
 	elif event.is_action_pressed("dash") and can_dash and current_state != State.DASH:
 		start_dash()
+	elif event.is_action_pressed("attack"):
+		attack()
 
 # --- Lógica de Estados ---
 
@@ -111,6 +115,32 @@ func end_dash() -> void:
 		await get_tree().create_timer(DASH_COOLDOWN).timeout
 		can_dash = true
 		print("Dash pronto!")
+
+func attack() -> void:
+	# Só pode atacar com Anel Ativado (GDD)
+	if not is_ring_active:
+		return
+		
+	# Instanciar Fireball
+	var fireball = fireball_scene.instantiate()
+	fireball.global_position = global_position
+	
+	# Direção do tiro (mouse ou movimento)
+	# Por enquanto, usa a direção do movimento ou direita se parado
+	var direction = Vector2.RIGHT
+	var input_vector = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	if input_vector != Vector2.ZERO:
+		direction = input_vector.normalized()
+	elif velocity != Vector2.ZERO:
+		direction = velocity.normalized()
+	
+	fireball.direction = direction
+	get_parent().add_child(fireball)
+	
+	# Custo de Possessão (+10%)
+	if possession_component:
+		possession_component.add_possession(10.0)
+		print("🔥 Ataque! Possessão +10%")
 
 # --- Física e Movimento ---
 
