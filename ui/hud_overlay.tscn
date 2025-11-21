@@ -42,7 +42,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 max_value = 100.0
-fill_mode = 1
+fill_mode = 0
 show_percentage = false
 
 [node name="RingIndicator" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
