@@ -139,7 +139,7 @@ func attack() -> void:
 	
 	# Custo de Possessão (+10%)
 	if possession_component:
-		possession_component.add_possession(10.0)
+		possession_component.add_possession(10.0, true)
 		print("🔥 Ataque! Possessão +10%")
 
 # --- Física e Movimento ---

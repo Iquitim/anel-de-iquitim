@@ -10,6 +10,7 @@ extends Node
 @export var health_component: HealthComponent
 
 var current_possession: float = 0.0
+var decayable_pool: float = 0.0
 
 # Timer para o Cooldown da Forma Iquitim
 var iquitim_cooldown_timer: Timer
@@ -26,19 +27,35 @@ func _process(delta: float) -> void:
 	_check_possession_limit()
 
 func _handle_decay(delta: float) -> void:
-	if current_possession > 0:
-		current_possession -= possession_decay_rate * delta
+	if decayable_pool > 0:
+		var decay_amount = min(possession_decay_rate * delta, decayable_pool)
+		decayable_pool -= decay_amount
+		current_possession -= decay_amount
+		
+		# Safety checks
+		decayable_pool = max(0.0, decayable_pool)
 		current_possession = max(0.0, current_possession)
+		
 		SignalBus.possession_updated.emit(current_possession, max_health)
 
-func add_possession(amount: float) -> void:
+func add_possession(amount: float, is_decayable: bool = false) -> void:
 	current_possession += amount
+	
+	if is_decayable:
+		decayable_pool += amount
+	
 	current_possession = clamp(current_possession, 0.0, max_health * 1.5) # Cap de segurança
 	SignalBus.possession_updated.emit(current_possession, max_health)
 
 func reduce_possession(amount: float) -> void:
 	current_possession -= amount
 	current_possession = max(0.0, current_possession)
+	
+	# Se reduzirmos possessão manualmente (ex: desativar anel), 
+	# devemos garantir que o pool não fique maior que o total
+	if decayable_pool > current_possession:
+		decayable_pool = current_possession
+		
 	SignalBus.possession_updated.emit(current_possession, max_health)
 
 func _check_possession_limit() -> void:
