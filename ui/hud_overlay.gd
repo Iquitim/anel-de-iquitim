@@ -57,8 +57,8 @@ func _connect_signals() -> void:
 	if SignalBus.has_signal("ring_toggled"):
 		SignalBus.ring_toggled.connect(_on_ring_toggled)
 	
-	# TODO: Conectar signal de health_updated quando HealthComponent existir
-	# SignalBus.health_updated.connect(_on_health_updated)
+	if SignalBus.has_signal("health_updated"):
+		SignalBus.health_updated.connect(_on_health_updated)
 
 func _update_bars() -> void:
 	## Atualiza os valores visuais das barras

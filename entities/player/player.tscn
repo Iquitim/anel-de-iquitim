@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ck7c5x8xygdnb" path="res://entities/player/player_controller.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://dw5k8m3xr9vn" path="res://assets/sprites/player_simple.png" id="2_icon"]
 [ext_resource type="Script" uid="uid://by3ps2vwrrl7m" path="res://systems/possession_component.gd" id="3_possession"]
+[ext_resource type="Script" path="res://systems/health_component.gd" id="4_health"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 28.0
@@ -19,5 +20,8 @@ shape = SubResource("CircleShape2D_1")
 
 [node name="PossessionComponent" type="Node" parent="."]
 script = ExtResource("3_possession")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("4_health")
 
 [node name="Camera2D" type="Camera2D" parent="."]

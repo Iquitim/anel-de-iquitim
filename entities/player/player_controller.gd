@@ -27,9 +27,14 @@ var is_iquitim_form: bool = false
 
 # Referências aos Componentes
 @onready var possession_component: PossessionComponent = $PossessionComponent
+@onready var health_component: HealthComponent = $HealthComponent
 @onready var sprite: Sprite2D = $Sprite2D
 
 func _ready() -> void:
+	# Configurar dependências
+	if possession_component and health_component:
+		possession_component.health_component = health_component
+	
 	# Conectar sinais se necessário
 	pass
 
@@ -64,6 +69,8 @@ func _state_move(delta: float) -> void:
 		_apply_friction(delta)
 	else:
 		_apply_movement(input_vector, delta)
+		# Sem regen enquanto move
+		if health_component: health_component.can_regenerate = false
 
 # --- Física e Movimento ---
 
@@ -78,6 +85,22 @@ func _apply_movement(input_vector: Vector2, delta: float) -> void:
 
 func _apply_friction(delta: float) -> void:
 	velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+	
+	# Se estiver parado e anel desligado, permite regen (o delay é interno do componente)
+	if velocity == Vector2.ZERO and not is_ring_active and health_component:
+		health_component.can_regenerate = true
+
+func take_damage(amount: float) -> void:
+	# Invulnerabilidade na forma Iquitim
+	if is_iquitim_form:
+		return
+		
+	if health_component:
+		health_component.take_damage(amount)
+		# Feedback visual simples (piscar vermelho)
+		var tween = create_tween()
+		tween.tween_property(sprite, "modulate", Color.RED, 0.1)
+		tween.tween_property(sprite, "modulate", Color.WHITE, 0.1)
 
 # --- Mecânica do Anel (GDD 10.4) ---
 
@@ -92,8 +115,12 @@ func toggle_ring_state() -> void:
 		sprite.modulate = Color(0.17, 1.0, 0.51)
 		
 		# Penalidade instantânea ao ativar
+		# Penalidade instantânea ao ativar
 		if possession_component:
 			possession_component.add_possession(10.0)
+			
+		if health_component:
+			health_component.can_regenerate = false
 		
 		# Alerta inimigos (Quebra Stealth)
 		SignalBus.noise_generated.emit(global_position, 200.0)

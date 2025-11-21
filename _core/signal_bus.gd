@@ -9,6 +9,7 @@ signal game_over(reason: String)
 signal player_died
 signal noise_generated(position: Vector2, radius: float)
 signal possession_updated(current: float, max_val: float)
+signal health_updated(current: float, max_val: float)
 signal ring_toggled(is_active: bool)
 
 # Sinais de Combate
