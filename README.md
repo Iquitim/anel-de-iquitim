@@ -87,6 +87,7 @@ anel-de-iquitim/
 - **Controle de Versão:** Git
 - **Testes:** GdUnit4
 - **Assets:** Pixel Art (32x32)
+- [x] Movimentação Básica (Top-Down)
 - [x] Feedback visual (verde quando ativo)
 - [x] Ajuste de velocidade dinâmica (90→130 px/s)
 - [ ] Dash com I-frames

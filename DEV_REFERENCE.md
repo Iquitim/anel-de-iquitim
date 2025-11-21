@@ -101,9 +101,9 @@ const COLOR_DEEP_BLACK := Color("#0B0B0B")  # RGB(11, 11, 11)
 signal noise_generated(position: Vector2, radius: float)
 signal possession_updated(current: float, max: float)
 signal game_over(reason: String)
+signal ring_toggled(is_active: bool)
 
 # A implementar
-signal ring_toggled(is_active: bool)
 signal transformation_started()
 signal transformation_ended()
 signal player_died()
