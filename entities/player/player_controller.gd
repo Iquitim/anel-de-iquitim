@@ -11,6 +11,9 @@ const SPEED_RING: float = 130.0 # Agil, combate
 const SPEED_IQUITIM: float = 220.0 # Descontrolado
 const ACCELERATION: float = 800.0 # Inercia pesada
 const FRICTION: float = 1000.0 # Parada nao-imediata
+const DASH_SPEED: float = 300.0 # Velocidade do Dash
+const DASH_DURATION: float = 0.2 # Duracao do Dash
+const DASH_COOLDOWN: float = 1.2 # Cooldown do Dash
 
 # Estados da Máquina de Estados
 enum State {
@@ -24,6 +27,8 @@ enum State {
 var current_state: State = State.IDLE
 var is_ring_active: bool = false
 var is_iquitim_form: bool = false
+var can_dash: bool = true
+var dash_direction: Vector2 = Vector2.ZERO
 
 # Referências aos Componentes
 @onready var possession_component: PossessionComponent = $PossessionComponent
@@ -45,13 +50,15 @@ func _physics_process(delta: float) -> void:
 		State.MOVE:
 			_state_move(delta)
 		State.DASH:
-			pass # TODO: Implementar Dash
+			_state_dash(delta)
 	
 	move_and_slide()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_ring"):
 		toggle_ring_state()
+	elif event.is_action_pressed("dash") and can_dash and current_state != State.DASH:
+		start_dash()
 
 # --- Lógica de Estados ---
 
@@ -72,6 +79,39 @@ func _state_move(delta: float) -> void:
 		# Sem regen enquanto move
 		if health_component: health_component.can_regenerate = false
 
+func start_dash() -> void:
+	current_state = State.DASH
+	can_dash = false
+	
+	# Determinar direção do dash (movimento atual ou frente padrão)
+	var input_vector = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	if input_vector != Vector2.ZERO:
+		dash_direction = input_vector.normalized()
+	else:
+		# Se parado, dash para a direita (ou última direção se tivéssemos facing_direction)
+		dash_direction = Vector2.RIGHT
+	
+	# Feedback visual (transparência)
+	sprite.modulate.a = 0.5
+	
+	# Timer de Duração
+	await get_tree().create_timer(DASH_DURATION).timeout
+	end_dash()
+
+func _state_dash(_delta: float) -> void:
+	velocity = dash_direction * DASH_SPEED
+
+func end_dash() -> void:
+	if current_state == State.DASH:
+		current_state = State.IDLE
+		velocity = Vector2.ZERO
+		sprite.modulate.a = 1.0
+		
+		# Timer de Cooldown
+		await get_tree().create_timer(DASH_COOLDOWN).timeout
+		can_dash = true
+		print("Dash pronto!")
+
 # --- Física e Movimento ---
 
 func get_target_speed() -> float:
@@ -91,8 +131,8 @@ func _apply_friction(delta: float) -> void:
 		health_component.can_regenerate = true
 
 func take_damage(amount: float) -> void:
-	# Invulnerabilidade na forma Iquitim
-	if is_iquitim_form:
+	# Invulnerabilidade na forma Iquitim ou Dash
+	if is_iquitim_form or current_state == State.DASH:
 		return
 		
 	if health_component:
