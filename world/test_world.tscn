@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://ui/hud_overlay.tscn" id="2_hud"]
 
 [node name="TestWorld" type="Node2D"]
+
+[node name="HUDOverlay" parent="." instance=ExtResource("2_hud")]
 
 [node name="Background" type="ColorRect" parent="."]
 offset_right = 1152.0

@@ -84,6 +84,9 @@ func _apply_friction(delta: float) -> void:
 func toggle_ring_state() -> void:
 	is_ring_active = !is_ring_active
 	
+	# Emitir signal para UI
+	SignalBus.ring_toggled.emit(is_ring_active)
+	
 	if is_ring_active:
 		# Feedback Visual: Verde Iquitim (#2BFF81)
 		sprite.modulate = Color(0.17, 1.0, 0.51)
